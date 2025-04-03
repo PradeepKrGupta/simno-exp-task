@@ -1,74 +1,49 @@
 // src/components/sections/SubscriberSection.tsx
-import React, { useState, useEffect } from 'react';
-import InputField from '../common/InputField';
+import React, { useState, useEffect } from "react";
+import NumberInput from "../common/NumberInput";
+import InputField from "../common/InputField";
+import { subscriberDefaults } from "../../config/formConfig";
+import { useFormContext } from "../../context/FormContext";
+import { validateSubscriberSection } from "../../utils/formUtils";
 
-type SubscriberSectionProps = {
-  onDataChange: (data: any) => void;
-  savedData?: any;
-};
+interface SubscriberSectionProps {
+  onNext: () => void;
+}
 
-const SubscriberSection: React.FC<SubscriberSectionProps> = ({ onDataChange, savedData }) => {
-  const [totalUEs, setTotalUEs] = useState<number>(savedData?.totalUEs || 0);
-  const [ues, setUes] = useState<string>(savedData?.ues || '');
-  const [startingSupi, setStartingSupi] = useState(savedData?.startingSupi || '001010123456001');
-  const [sharedKey, setSharedKey] = useState(savedData?.sharedKey || '00112233445566778899aabbccddeeff');
-  const [mncDigits, setMncDigits] = useState<number>(savedData?.mncDigits || 2);
+const SubscriberSection: React.FC<SubscriberSectionProps> = ({ onNext }) => {
+  const { formData, updateFormData } = useFormContext();
+  const saved = formData.subscriber || {};
 
-  const generateUEs = () => {
-    const ueList = [];
-    for (let i = 1; i <= totalUEs; i++) {
-      ueList.push(`Cell #${i}`);
+  const [totalUEs, setTotalUEs] = useState<number>(saved.totalUEs || subscriberDefaults.totalUEs);
+  const [startingSupi, setStartingSupi] = useState<string>(saved.startingSupi || subscriberDefaults.startingSupi);
+  const [sharedKey, setSharedKey] = useState<string>(saved.sharedKey || subscriberDefaults.sharedKey);
+  const [mncDigits, setMncDigits] = useState<number>(saved.mncDigits || subscriberDefaults.mncDigits);
+
+  const handleNext = () => {
+    const data = { totalUEs, startingSupi, sharedKey, mncDigits };
+    const validation = validateSubscriberSection(data);
+    if (validation === true) {
+      updateFormData("subscriber", data);
+      onNext();
+    } else {
+      alert(validation);
     }
-    setUes(ueList.join(', '));
   };
 
   useEffect(() => {
-    onDataChange({ totalUEs, ues, startingSupi, sharedKey, mncDigits });
-  }, [totalUEs, ues, startingSupi, sharedKey, mncDigits, onDataChange]);
+    updateFormData("subscriber", { totalUEs, startingSupi, sharedKey, mncDigits });
+  }, [totalUEs, startingSupi, sharedKey, mncDigits, updateFormData]);
 
   return (
-    <div className="section subscriber-section">
-      <h2>Subscriber Section</h2>
-      <div className="section-header">
-        <InputField
-          type="numeric"
-          label="Total # of UEs"
-          id="totalUEs"
-          defaultValue={totalUEs}
-          onChange={(val) => setTotalUEs(Number(val))}
-        />
-        <button onClick={generateUEs}>Generate UE Ranges</button>
-      </div>
-      <div className="section-main">
-        <InputField
-          type="string"
-          label="# of UEs (Serving Cells)"
-          id="ues"
-          defaultValue={ues}
-          onChange={() => {}}
-        />
-        <InputField
-          type="string"
-          label="Starting SUPI"
-          id="startingSupi"
-          defaultValue={startingSupi}
-          onChange={setStartingSupi}
-        />
-        <InputField
-          type="string"
-          label="Shared Key"
-          id="sharedKey"
-          defaultValue={sharedKey}
-          onChange={setSharedKey}
-        />
-        <InputField
-          type="numeric"
-          label="MNC Digits"
-          id="mncDigits"
-          defaultValue={mncDigits}
-          onChange={(val) => setMncDigits(Number(val))}
-        />
-      </div>
+    <div className="section-container">
+      <h2>Subscriber Configuration</h2>
+      <NumberInput label="Total # of UEs" value={totalUEs} onChange={(e) => setTotalUEs(Number(e.target.value))} />
+      <InputField label="Starting SUPI" value={startingSupi} onChange={(e) => setStartingSupi(e.target.value)} />
+      <InputField label="Shared Key" value={sharedKey} onChange={(e) => setSharedKey(e.target.value)} />
+      <NumberInput label="MNC Digits" value={mncDigits} onChange={(e) => setMncDigits(Number(e.target.value))} />
+      <button className="next-button" onClick={handleNext}>
+        Next
+      </button>
     </div>
   );
 };

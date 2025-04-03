@@ -1,31 +1,53 @@
-// src/components/common/Dropdown.tsx
-import React from 'react';
+// // src/components/common/Dropdown.tsx
+// import React from "react";
 
-export type DropdownOption = {
+// export interface DropdownProps {
+//   label: string;
+//   value: string;
+//   options: string[];
+//   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+// }
+
+// const Dropdown: React.FC<DropdownProps> = ({ label, value, options, onChange }) => {
+//   return (
+//     <div className="dropdown-field">
+//       <label className="input-label">{label}</label>
+//       <select value={value} onChange={onChange} className="input-control">
+//         {options.map((opt) => (
+//           <option key={opt} value={opt}>
+//             {opt}
+//           </option>
+//         ))}
+//       </select>
+//     </div>
+//   );
+// };
+
+// export default Dropdown;
+
+
+
+// =============adding new code==========
+
+
+// src/components/common/Dropdown.tsx
+import React from "react";
+
+export interface DropdownProps {
   label: string;
   value: string;
-};
+  options: string[];
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+}
 
-export type DropdownProps = {
-  label: string;
-  id: string;
-  options: DropdownOption[];
-  defaultValue?: string;
-  onChange: (value: string) => void;
-};
-
-const Dropdown: React.FC<DropdownProps> = ({ label, id, options, defaultValue, onChange }) => {
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    onChange(e.target.value);
-  };
-
+const Dropdown: React.FC<DropdownProps> = ({ label, value, options, onChange }) => {
   return (
     <div className="dropdown-field">
-      <label htmlFor={id}>{label}</label>
-      <select id={id} defaultValue={defaultValue} onChange={handleChange}>
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
+      <label className="input-label">{label}</label>
+      <select value={value} onChange={onChange} className="input-control">
+        {options.map((opt) => (
+          <option key={opt} value={opt}>
+            {opt}
           </option>
         ))}
       </select>
@@ -34,3 +56,4 @@ const Dropdown: React.FC<DropdownProps> = ({ label, id, options, defaultValue, o
 };
 
 export default Dropdown;
+

@@ -1,39 +1,62 @@
+// // src/components/common/InputField.tsx
+// import React from "react";
+
+// export interface InputFieldProps {
+//   label: string;
+//   value: string;
+//   type?: string;
+//   placeholder?: string;
+//   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+// }
+
+// const InputField: React.FC<InputFieldProps> = ({ label, value, type = "text", placeholder, onChange }) => {
+//   return (
+//     <div className="input-field">
+//       <label className="input-label">{label}</label>
+//       <input
+//         type={type}
+//         value={value}
+//         placeholder={placeholder}
+//         onChange={onChange}
+//         className="input-control"
+//       />
+//     </div>
+//   );
+// };
+
+// export default InputField;
+
+
+// ==========adding new code============
+
 // src/components/common/InputField.tsx
-import React from 'react';
+import React from "react";
 
-export type InputFieldProps = {
-  type: 'alphanumeric' | 'numeric' | 'string' | 'dropdown';
+export interface InputFieldProps {
   label: string;
-  id: string;
-  defaultValue?: any;
-  options?: Array<{ label: string; value: string }>;
-  onChange: (value: any) => void;
-};
+  value: string;
+  type?: string;
+  placeholder?: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
-const InputField: React.FC<InputFieldProps> = ({ type, label, id, defaultValue, options, onChange }) => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    onChange(e.target.value);
-  };
-
+const InputField: React.FC<InputFieldProps> = ({
+  label,
+  value,
+  type = "text",
+  placeholder,
+  onChange,
+}) => {
   return (
     <div className="input-field">
-      <label htmlFor={id}>{label}</label>
-      {type === 'dropdown' ? (
-        <select id={id} defaultValue={defaultValue} onChange={handleChange}>
-          {options?.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
-            </option>
-          ))}
-        </select>
-      ) : (
-        <input
-          id={id}
-          type={type === 'numeric' ? 'number' : 'text'}
-          defaultValue={defaultValue}
-          onChange={handleChange}
-        />
-      )}
+      <label className="input-label">{label}</label>
+      <input
+        type={type}
+        value={value}
+        placeholder={placeholder}
+        onChange={onChange}
+        className="input-control"
+      />
     </div>
   );
 };

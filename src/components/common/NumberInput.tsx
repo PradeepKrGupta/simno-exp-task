@@ -1,22 +1,56 @@
+// // src/components/common/NumberInput.tsx
+// import React from "react";
+
+// export interface NumberInputProps {
+//   label: string;
+//   value: number;
+//   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+//   placeholder?: string;
+// }
+
+// const NumberInput: React.FC<NumberInputProps> = ({ label, value, onChange, placeholder }) => {
+//   return (
+//     <div className="number-input-field">
+//       <label className="input-label">{label}</label>
+//       <input
+//         type="number"
+//         value={value}
+//         placeholder={placeholder}
+//         onChange={onChange}
+//         className="input-control"
+//       />
+//     </div>
+//   );
+// };
+
+// export default NumberInput;
+
+
+
+// ===============adding new codae============
+
+
 // src/components/common/NumberInput.tsx
-import React from 'react';
+import React from "react";
 
-export type NumberInputProps = {
+export interface NumberInputProps {
   label: string;
-  id: string;
-  defaultValue?: number;
-  onChange: (value: number) => void;
-};
+  value: number;
+  placeholder?: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
-const NumberInput: React.FC<NumberInputProps> = ({ label, id, defaultValue, onChange }) => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(Number(e.target.value));
-  };
-
+const NumberInput: React.FC<NumberInputProps> = ({ label, value, placeholder, onChange }) => {
   return (
     <div className="number-input-field">
-      <label htmlFor={id}>{label}</label>
-      <input type="number" id={id} defaultValue={defaultValue} onChange={handleChange} />
+      <label className="input-label">{label}</label>
+      <input
+        type="number"
+        value={value}
+        placeholder={placeholder}
+        onChange={onChange}
+        className="input-control"
+      />
     </div>
   );
 };

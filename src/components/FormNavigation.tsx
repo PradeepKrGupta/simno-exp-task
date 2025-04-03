@@ -1,39 +1,71 @@
+// // src/components/FormNavigation.tsx
+// import React from "react";
+// import "../styles/main.css";
+
+// interface Section {
+//   key: string;
+//   label: string;
+// }
+
+// interface FormNavigationProps {
+//   sections: Section[];
+//   activeSection: string;
+//   setActiveSection: (section: string) => void;
+// }
+
+// const FormNavigation: React.FC<FormNavigationProps> = ({ sections, activeSection, setActiveSection }) => {
+//   return (
+//     <nav className="form-navigation">
+//       {sections.map((section) => (
+//         <button
+//           key={section.key}
+//           className={`nav-button ${activeSection === section.key ? "active" : ""}`}
+//           onClick={() => setActiveSection(section.key)}
+//         >
+//           {section.label}
+//         </button>
+//       ))}
+//     </nav>
+//   );
+// };
+
+// export default FormNavigation;
+
+
+// ===========Trying new codee============
+
 // src/components/FormNavigation.tsx
-import React from 'react';
+import React from "react";
+import "../styles/main.css";
+
+interface Section {
+  key: string;
+  label: string;
+}
 
 interface FormNavigationProps {
-  currentStep: number;
-  totalSteps: number;
-  onNext: () => void;
-  onBack: () => void;
-  onSubmit?: () => void;
+  sections: Section[];
+  activeSection: string;
+  setActiveSection: (section: string) => void;
 }
 
 const FormNavigation: React.FC<FormNavigationProps> = ({
-  currentStep,
-  totalSteps,
-  onNext,
-  onBack,
-  onSubmit,
+  sections,
+  activeSection,
+  setActiveSection,
 }) => {
   return (
-    <div className="form-navigation">
-      {currentStep > 0 && (
-        <button className="nav-button back-button" onClick={onBack}>
-          Back
+    <nav className="form-navigation">
+      {sections.map((section) => (
+        <button
+          key={section.key}
+          className={`nav-button ${activeSection === section.key ? "active" : ""}`}
+          onClick={() => setActiveSection(section.key)}
+        >
+          {section.label}
         </button>
-      )}
-      {currentStep < totalSteps - 1 && (
-        <button className="nav-button next-button" onClick={onNext}>
-          Next
-        </button>
-      )}
-      {currentStep === totalSteps - 1 && onSubmit && (
-        <button className="nav-button submit-button" onClick={onSubmit}>
-          Submit
-        </button>
-      )}
-    </div>
+      ))}
+    </nav>
   );
 };
 

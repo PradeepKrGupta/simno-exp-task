@@ -1,3 +1,5 @@
+src/styles/main.css
+
 /* Global Styles */
 body {
   margin: 0;
@@ -13,7 +15,7 @@ body {
   margin: 2rem auto;
   background-color: #ffffff;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
 
@@ -25,7 +27,7 @@ body {
   text-align: center;
 }
 
-/* Navigation */
+/* Form Navigation */
 .form-navigation {
   display: flex;
   background-color: #30475e;
@@ -37,6 +39,7 @@ body {
   background: none;
   border: none;
   color: #ffffff;
+  font-size: 1rem;
   cursor: pointer;
   transition: background 0.3s;
 }
@@ -49,7 +52,6 @@ body {
 
 /* Section Container */
 .section-container {
-  position: relative;
   padding: 1.5rem;
   margin: 1rem;
   background-color: #e8f0f2;
@@ -75,21 +77,13 @@ body {
   border-radius: 4px;
 }
 
-/* Next Button - fixed at bottom right of each section */
-.next-button {
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-  padding: 0.75rem 1.5rem;
-  background-color: #30475e;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background 0.3s;
+/* Checkbox Styles */
+.checkbox-field {
+  flex-direction: row;
+  align-items: center;
 }
-.next-button:hover {
-  background-color: #3e5c76;
+.checkbox-control {
+  margin-right: 0.5rem;
 }
 
 /* Section Content */
@@ -97,29 +91,16 @@ body {
   padding: 1rem;
 }
 
-
-
-/* ========================adding new styling===================== */
-
-.section-container {
-  padding: 20px;
-}
-
-.cell-container {
-  border: 1px solid #ccc;
-  padding: 15px;
-  margin-bottom: 15px;
-}
-
-.add-cell-button {
-  margin-left: 10px;
-  background-color: green;
-  color: white;
-  padding: 8px 12px;
+/* Button Styles */
+button {
+  padding: 0.5rem 1rem;
   border: none;
+  background-color: #30475e;
+  color: #ffffff;
+  border-radius: 4px;
   cursor: pointer;
+  transition: background 0.3s;
 }
-
-.next-button {
-  margin-top: 20px;
+button:hover {
+  background-color: #3e5c76;
 }

@@ -1,24 +1,49 @@
+// // src/components/common/Checkbox.tsx
+// import React from "react";
+
+// export interface CheckboxProps {
+//   label: string;
+//   checked: boolean;
+//   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+// }
+
+// const Checkbox: React.FC<CheckboxProps> = ({ label, checked, onChange }) => {
+//   return (
+//     <div className="checkbox-field">
+//       <input type="checkbox" checked={checked} onChange={onChange} className="checkbox-control" />
+//       <label className="checkbox-label">{label}</label>
+//     </div>
+//   );
+// };
+
+// export default Checkbox;
+
+
+
+// ===========adding new code===========
+
 // src/components/common/Checkbox.tsx
-import React from 'react';
+import React from "react";
 
-export type CheckboxProps = {
+export interface CheckboxProps {
   label: string;
-  id: string;
   checked: boolean;
-  onChange: (checked: boolean) => void;
-};
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
-const Checkbox: React.FC<CheckboxProps> = ({ label, id, checked, onChange }) => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(e.target.checked);
-  };
-
+const Checkbox: React.FC<CheckboxProps> = ({ label, checked, onChange }) => {
   return (
     <div className="checkbox-field">
-      <input type="checkbox" id={id} checked={checked} onChange={handleChange} />
-      <label htmlFor={id}>{label}</label>
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={onChange}
+        className="checkbox-control"
+      />
+      <label className="checkbox-label">{label}</label>
     </div>
   );
 };
 
 export default Checkbox;
+

@@ -1,96 +1,113 @@
+// // src/App.tsx
+// import React, { useState } from "react";
+// import FormNavigation from "./components/FormNavigation";
+// import CellSection from "./components/sections/CellSection";
+// import SubscriberSection from "./components/sections/SubscriberSection";
+// import UserPlaneSection from "./components/sections/UserPlaneSection";
+// import TrafficSection from "./components/sections/TrafficSection";
+// import MobilitySection from "./components/sections/MobilitySection";
+// import SettingsSection from "./components/sections/SettingsSection";
+// import { FormProvider } from "./context/FormContext";
+// import "./styles/main.css";
+
+// const App: React.FC = () => {
+//   // We'll display all sections in one page; you can navigate using tabs.
+//   const sections = [
+//     { key: "Cell", label: "Cell", component: <CellSection /> },
+//     { key: "Subscriber", label: "Subscriber", component: <SubscriberSection /> },
+//     { key: "UserPlane", label: "User Plane", component: <UserPlaneSection /> },
+//     { key: "Traffic", label: "Traffic", component: <TrafficSection /> },
+//     { key: "Mobility", label: "Mobility", component: <MobilitySection /> },
+//     { key: "Settings", label: "Settings", component: <SettingsSection /> },
+//   ];
+
+//   const [activeSection, setActiveSection] = useState<string>("Cell");
+
+//   return (
+//     <FormProvider>
+//       <div className="app-container">
+//         <h1 className="app-title">Network Test Case Configuration</h1>
+//         <FormNavigation
+//           sections={sections}
+//           activeSection={activeSection}
+//           setActiveSection={setActiveSection}
+//         />
+//         <div className="section-content">
+//           {sections.find((sec) => sec.key === activeSection)?.component}
+//         </div>
+//       </div>
+//     </FormProvider>
+//   );
+// };
+
+// export default App;
+
+
+
+// ===========Trying new code==========
+
 // src/App.tsx
-import React, { useState } from 'react';
-import CellSection from './components/sections/CellSection';
-import SubscriberSection from './components/sections/SubscriberSection';
-import UserPlaneSection from './components/sections/UserPlaneSection';
-import TrafficSection from './components/sections/TrafficSection';
-import MobilitySection from './components/sections/MobilitySection';
-import SettingsSection from './components/sections/SettingsSection';
-import FormNavigation from './components/FormNavigation';
+import React, { useState } from "react";
+import FormNavigation from "./components/FormNavigation";
+import CellSection from "./components/sections/CellSection";
+import SubscriberSection from "./components/sections/SubscriberSection";
+import UserPlaneSection from "./components/sections/UserPlaneSection";
+import TrafficSection from "./components/sections/TrafficSection";
+import MobilitySection from "./components/sections/MobilitySection";
+import SettingsSection from "./components/sections/SettingsSection";
+import { FormProvider } from "./context/FormContext";
+import "./styles/main.css";
 
 const App: React.FC = () => {
-  const totalSteps = 6;
-  const [currentStep, setCurrentStep] = useState<number>(0);
-  const [formData, setFormData] = useState<any>({});
+  const sections = [
+    { key: "Cell", label: "Cell" },
+    { key: "Subscriber", label: "Subscriber" },
+    { key: "UserPlane", label: "User Plane" },
+    { key: "Traffic", label: "Traffic" },
+    { key: "Mobility", label: "Mobility" },
+    { key: "Settings", label: "Settings" },
+  ];
 
-  const updateSectionData = (sectionKey: string, data: any) => {
-    setFormData((prev: any) => ({ ...prev, [sectionKey]: data }));
+  const [activeSection, setActiveSection] = useState<string>("Cell");
+
+  const handleNextSection = () => {
+    const currentIndex = sections.findIndex((s) => s.key === activeSection);
+    if (currentIndex < sections.length - 1) {
+      setActiveSection(sections[currentIndex + 1].key);
+    }
   };
 
-  const handleNext = () => {
-    setCurrentStep((prev) => Math.min(prev + 1, totalSteps - 1));
-  };
-
-  const handleBack = () => {
-    setCurrentStep((prev) => Math.max(prev - 1, 0));
-  };
-
-  const handleSubmit = () => {
-    console.log('Final Form Data:', formData);
-    localStorage.setItem('allFormData', JSON.stringify(formData));
-    alert('Form Submitted! Check console for output.');
-  };
-
-  const renderSection = () => {
-    switch (currentStep) {
-      case 0:
-        return (
-          <CellSection
-            onDataChange={(data: any) => updateSectionData('cellSectionData', data)}
-            savedData={formData.cellSectionData}
-          />
-        );
-      case 1:
-        return (
-          <SubscriberSection
-            onDataChange={(data: any) => updateSectionData('subscriberSectionData', data)}
-            savedData={formData.subscriberSectionData}
-          />
-        );
-      case 2:
-        return (
-          <UserPlaneSection
-            onDataChange={(data: any) => updateSectionData('userPlaneSectionData', data)}
-            savedData={formData.userPlaneSectionData}
-          />
-        );
-      case 3:
-        return (
-          <TrafficSection
-            onDataChange={(data: any) => updateSectionData('trafficSectionData', data)}
-            savedData={formData.trafficSectionData}
-          />
-        );
-      case 4:
-        return (
-          <MobilitySection
-            onDataChange={(data: any) => updateSectionData('mobilitySectionData', data)}
-            savedData={formData.mobilitySectionData}
-          />
-        );
-      case 5:
-        return (
-          <SettingsSection
-            onDataChange={(data: any) => updateSectionData('settingsSectionData', data)}
-            savedData={formData.settingsSectionData}
-          />
-        );
+  const renderActiveSection = () => {
+    switch (activeSection) {
+      case "Cell":
+        return <CellSection onNext={handleNextSection} />;
+      case "Subscriber":
+        return <SubscriberSection onNext={handleNextSection} />;
+      case "UserPlane":
+        return <UserPlaneSection onNext={handleNextSection} />;
+      case "Traffic":
+        return <TrafficSection onNext={handleNextSection} />;
+      case "Mobility":
+        return <MobilitySection onNext={handleNextSection} />;
+      case "Settings":
+        return <SettingsSection onNext={handleNextSection} />;
       default:
-        return <div>Form Completed!</div>;
+        return <div>Unknown Section</div>;
     }
   };
 
   return (
-    <div className="app">
-      {renderSection()}
-      <FormNavigation
-        currentStep={currentStep}
-        totalSteps={totalSteps}
-        onNext={currentStep === totalSteps - 1 ? handleSubmit : handleNext}
-        onBack={handleBack}
-        onSubmit={handleSubmit}
-      />
-    </div>
+    <FormProvider>
+      <div className="app-container">
+        <h1 className="app-title">Network Test Case Configuration</h1>
+        <FormNavigation
+          sections={sections}
+          activeSection={activeSection}
+          setActiveSection={setActiveSection}
+        />
+        <div className="section-content">{renderActiveSection()}</div>
+      </div>
+    </FormProvider>
   );
 };
 
