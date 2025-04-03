@@ -28,6 +28,8 @@
 
 
 // ==========adding new code============
+//==========A reusable component to render a text input field with a label.========
+
 
 // src/components/common/InputField.tsx
 import React from "react";

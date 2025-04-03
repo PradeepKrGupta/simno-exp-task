@@ -34,6 +34,8 @@
 
 // ===========Trying new codee============
 
+//==========This component renders a navigation bar (e.g., as tabs or buttons) so that users can switch between different sections of the form.========
+
 // src/components/FormNavigation.tsx
 import React from "react";
 import "../styles/main.css";

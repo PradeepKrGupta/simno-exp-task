@@ -99,7 +99,7 @@ const App: React.FC = () => {
   return (
     <FormProvider>
       <div className="app-container">
-        <h1 className="app-title">Network Test Case Configuration</h1>
+        <h1 className="app-title">Simnovator Experiment Project</h1>
         <FormNavigation
           sections={sections}
           activeSection={activeSection}
